@@ -10,8 +10,9 @@ node {
         stage('Clone repository') {
             /* Let's make sure we have the repository cloned to our workspace */
             checkout scm
-            sh 'cp ../application.properties.account ./src/main/resources'
-            sh 'mv src/main/resources/application.properties.account src/main/resources/application.properties'
+            sh 'cp ./src/main/resources/application.properties.account ./src/main/resources'
+            sh 'mv ./src/main/resources/application.properties.account ./src/main/resources/application.properties'
+
 
             if(env.BRANCH_NAME == 'develop') {
                 sh ('sed -i \'s|SERVER_BASE_URL|https://apis-neobank-account-staging.completefarmer.com|\' src/main/resources/application.properties')
