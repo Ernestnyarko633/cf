@@ -1,0 +1,36 @@
+#Database Properties
+spring.datasource.url=jdbc:mysql://localhost:3306/neobank_account_service
+spring.datasource.username=root
+spring.datasource.password=password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+server.port=8081
+
+#RabbitMQ Properties
+spring.rabbitmq.host=localhost
+spring.rabbitmq.port=5672
+spring.rabbitmq.password=guest
+spring.rabbitmq.username=guest
+
+#APP Properties
+app.url=http://localhost:8081
+app.sms.queue=sms.queue
+app.sms.exchange=sms.exchange
+app.sms.routing.key=sms.routing.key
+
+#Queue Properties
+transaction.exchange=transaction.exchange
+
+disbursement.routing.key=disbursement.routing.key
+
+default.queue=default.queue
+default.exchange=default.exchange
+default.routing.key=default.routing.key
+
+#Neobank Properties
+neobank.api.gateway.url=http://localhost:8082
+
+SENTRY_AUTH_TOKEN=sentry_token
+sentry.dsn=sentry_dsn
+sentry.traces-sample-rate=1.0

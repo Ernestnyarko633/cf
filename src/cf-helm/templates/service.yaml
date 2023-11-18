@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cf-neobank-api-account-service
+  labels:
+    app.kubernetes.io/name: neobank-api-account-service
+    app.kubernetes.io/instance: wordpress-abcxzy
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/component: api
+    app.kubernetes.io/part-of: cf-neobank-services
+    app.kubernetes.io/managed-by: helm
+
+spec:
+  selector:
+    app: neobank-api-account-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

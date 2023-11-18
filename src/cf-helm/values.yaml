@@ -1,0 +1,4 @@
+replicaCount: 2
+repository: CON_REGISTRY
+tag: IMAGE_TAG
+registry: cf-neobank-repo
