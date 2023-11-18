@@ -169,7 +169,7 @@ node {
                 
             }
         }
-    }catch(err){
+    /*}catch(err){
         slackSend(color: '#F01717', message: "${err}")
         office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", message: "${err}"
         error "Build Failed ${err}"
