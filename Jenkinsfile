@@ -10,8 +10,13 @@ node {
         stage('Clone repository') {
             /* Let's make sure we have the repository cloned to our workspace */
             checkout scm
-            sh 'cp ./src/main/resources/application.properties.account ./src/main/resources'
-            sh 'mv ./src/main/resources/application.properties.account ./src/main/resources/application.properties'
+            checkout scm
+            sh 'cp ./src/main/resources/applications.properties.account ./src/main/resources'
+            sh 'mv ./src/main/resources/applications.properties.account ./src/main/resources/application.properties'
+
+            
+            /* sh 'cp ./src/main/resources/application.properties.account ./src/main/resources'
+            /* sh 'mv ./src/main/resources/application.properties.account ./src/main/resources/application.properties'
 
 
             if(env.BRANCH_NAME == 'develop') {
