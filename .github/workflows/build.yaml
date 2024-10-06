@@ -21,7 +21,7 @@ jobs:
           architecture: x64
           check-latest: false
           server-id: github
-          server-username: ${{ secret.USER_NAME }}  # Reference the GitHub actor correctly
+          server-username: ${{ secrets.USER_NAME }}  # Reference the GitHub actor correctly
           server-password: ${{ secrets.GIT_TOKEN }}  # Use GitHub token from secrets
           overwrite-settings: true
           job-status: success
