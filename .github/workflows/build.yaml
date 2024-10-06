@@ -1,0 +1,56 @@
+name: Deploy Java Application to Kubernetes
+
+on:
+  push:
+    branches:
+      - master  # Change this to your target branch if different
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'  # Change this to your required Java version
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests --file pom.xml  # Ensure your build command matches your setup
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-spring-boot-app:${{ github.sha }} .  # Change 'my-spring-boot-app' to your app's name
+          
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_REGISTRY_USERNAME }}" --password-stdin
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-spring-boot-app:${{ github.sha }}  # Change 'my-spring-boot-app' to your app's name
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Set up Kubernetes CLI
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'  # You can specify a version if needed
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml  # Ensure your kubeconfig is stored correctly in secrets
+          export KUBECONFIG=$(pwd)/kubeconfig.yaml
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/my-spring-boot-app my-spring-boot-app=${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-spring-boot-app:${{ github.sha }}  # Change 'my-spring-boot-app' to your deployment name
+          kubectl rollout status deployment/my-spring-boot-app  # Change 'my-spring-boot-app' to your deployment name
+
+      - name: Clean up
+        run: |
+          kubectl delete pod -l app=my-spring-boot-app --grace-period=0 --force  # Change 'my-spring-boot-app' to your app label, if necessary
