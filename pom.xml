@@ -92,8 +92,8 @@
                     <!-- in case you're self hosting, provide the URL here -->
                     <!--<url>http://localhost:8000/</url>-->
 
-                    <!-- provide your auth token via SENTRY_AUTH_TOKEN environment variable -->
-                    <authToken>ACCOUNT_SENTRY_AUTH_TOKEN</authToken>
+                    <!-- provide your auth token via SENTRY_DSN environment variable -->
+                    <authToken>${env.SENTRY_DSN}</authToken>
                 </configuration>
                 <executions>
                     <execution>
