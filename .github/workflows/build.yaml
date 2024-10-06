@@ -17,6 +17,14 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'  # Change this to your required Java version
+          java-package: jdk
+          architecture: x64
+          check-latest: false
+          server-id: github
+          server-username: ${{ secret.USER_NAME }}  # Reference the GitHub actor correctly
+          server-password: ${{ secrets.GIT_TOKEN }}  # Use GitHub token from secrets
+          overwrite-settings: true
+          job-status: success
 
       - name: Build with Maven
         run: mvn clean package -DskipTests --file pom.xml  # Ensure your build command matches your setup
