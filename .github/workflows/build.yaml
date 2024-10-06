@@ -13,6 +13,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2
 
+      # Commented out JDK setup step
       # - name: Set up JDK
       #   uses: actions/setup-java@v2
       #   with:
@@ -22,7 +23,7 @@ jobs:
       #     check-latest: false  # Optional, defaults to false
 
       - name: Build with Maven
-        run: mvn clean package -DskipTests --file pom.xml  # Ensure your build command matches your setup
+        run: mvn clean package -DskipTests -Dsentry.dsn=$SENTRY_DSN --file pom.xml  # Ensure your build command matches your setup
 
       - name: Build Docker image
         run: |
